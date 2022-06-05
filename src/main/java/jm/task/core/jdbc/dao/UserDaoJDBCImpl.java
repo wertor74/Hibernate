@@ -16,9 +16,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             daoConnection = Util.getConnection();
             statement = daoConnection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -30,8 +28,6 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() {
         try {
             statement.executeUpdate("CREATE TABLE Users (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), lastName VARCHAR(100), age TINYINT)");
-        } catch (SQLSyntaxErrorException e) {
-            System.out.println("Такая таблица уже существует!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,8 +36,6 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         try {
             statement.executeUpdate("DROP TABLE Users");
-        } catch (SQLSyntaxErrorException e) {
-            System.out.println("Такой таблицы не существует!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
