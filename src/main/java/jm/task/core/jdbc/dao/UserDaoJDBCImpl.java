@@ -27,7 +27,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try {
-            statement.executeUpdate("CREATE TABLE Users (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), lastName VARCHAR(100), age TINYINT)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Users (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100), lastName VARCHAR(100), age TINYINT)");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,7 +35,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try {
-            statement.executeUpdate("DROP TABLE Users");
+            statement.executeUpdate("DROP TABLE IF EXISTS Users");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,10 +84,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Users");
-            while (resultSet.next()) {
-                removeUserById(resultSet.getLong("id"));
-            }
+            preparedStatement = daoConnection.prepareStatement("TRUNCATE TABLE Users");
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
