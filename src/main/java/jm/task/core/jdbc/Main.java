@@ -1,5 +1,6 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 
 import java.sql.SQLException;
@@ -17,7 +18,9 @@ public class Main {
         //userDaoJDBC.saveUser("James", "Brown", (byte) 100);
         //userDaoJDBC.removeUserById(1);
         //System.out.println(userDaoJDBC.getAllUsers());
-        //userDaoJDBC.cleanUsersTable();
-        userDaoJDBC.dropUsersTable();
+        userDaoJDBC.cleanUsersTable();
+        //userDaoJDBC.dropUsersTable();
+        //jm.task.core.jdbc.dao.UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
+        //userDaoHibernate.createUsersTable();
     }
 }
