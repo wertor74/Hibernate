@@ -1,20 +1,29 @@
 package jm.task.core.jdbc.model;
 
 import javax.persistence.*;
+import jakarta.persistence.*;
+import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 @Entity
-@Table (name = "Users")
+@Table (name = "users", schema = "my_first_db")
 public class User {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name", length = 100)
     private String name;
 
-    @Column
+    @Column (name = "lastName", length = 100)
     private String lastName;
 
-    @Column
+    @Column(name = "age")
     private Byte age;
 
     public User() {

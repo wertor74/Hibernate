@@ -4,6 +4,9 @@ import jm.task.core.jdbc.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,23 +20,23 @@ public class Util {
     private static final String PASSWORD = "kA60022160";
     private static Connection connection;
 
-    private static final SessionFactory concreteSessionFactory;
+    private static SessionFactory concreteSessionFactory;
     static {
         try {
+            Configuration configuration = new Configuration();
             Properties properties = new Properties();
-            properties.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/my_first_db?useSSL = false");
+            properties.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/my_first_db");
             properties.setProperty("hibernate.connection.username", "wertor");
             properties.setProperty("hibernate.connection.password", "kA60022160");
+            //properties.setProperty("driver", "com.mysql.cj.jdbc.Driver");
             properties.setProperty("dialect", "org.hibernate.dialect.MySQLDialect");
+            properties.setProperty("hbm2ddl.auto", "update");
 
-            properties.setProperty("hibernate.hbm2ddl.auto", "update");
-
-            concreteSessionFactory = new org.hibernate.cfg.Configuration()
-                    .addProperties(properties)
-                    //.addPackage("com.kat")
-                    .addAnnotatedClass(User.class)
-                    .buildSessionFactory()
-            ;
+            configuration.setProperties(properties);
+            configuration.addAnnotatedClass(User.class);
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+            concreteSessionFactory = configuration.buildSessionFactory(serviceRegistry);
         }
         catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
