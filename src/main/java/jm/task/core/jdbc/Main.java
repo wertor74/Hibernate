@@ -30,6 +30,6 @@ public class Main {
 //        userDaoHibernate.saveUser("James", "Brown", (byte) 100);
         userDaoHibernate.removeUserById(18);
 //        System.out.println(userDaoHibernate.getAllUsers());
-//        userDaoHibernate.cleanUsersTable();
+        userDaoHibernate.cleanUsersTable();
     }
 }
